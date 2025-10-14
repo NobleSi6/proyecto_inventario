@@ -15,7 +15,7 @@ export class InventarioController {
     return this.inventarioService.create(createItemDto);
   }
 
-  //  NUEVA FUNCIÓN: GET para obtener la lista completa del inventario
+  //  NUEVA FUNCIÓN: GET para obtener la lista completa del inventario 👹🙌
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll(): Promise<ItemInventario[]> {

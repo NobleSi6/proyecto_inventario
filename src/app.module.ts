@@ -14,8 +14,8 @@ import { InventarioModule } from './inventario/inventario.module';
       host: 'localhost', // O el nombre de tu contenedor Docker si lo usas
       port: 5432,        // Puerto por defecto de PostgreSQL
       username: 'postgres', // ⚠️ CÁMBIALO
-      password: '123456789', // ⚠️ CÁMBIALO
-      database: 'TestBackup', // El nombre de tu DB
+      password: '76507680', // ⚠️ CÁMBIALO
+      database: 'testbackup', // El nombre de tu DB
       
       // Importante: lista todas tus entidades aquí
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
