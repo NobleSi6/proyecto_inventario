@@ -1,35 +1,37 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
-import { SalidasService } from './salidas.service';
-import { CreateSalidaDto } from './dto/create-salida.dto';
-import { UpdateSalidaDto } from './dto/update-salida.dto';
+import { StockAlmacenService } from './stock-almacen.service';
+import { CreateStockDto } from './dto/create-stock.dto';
+import { UpdateStockDto } from './dto/update-stock.dto';
 
-@Controller('salidas')
-export class SalidasController {
-  constructor(private readonly service: SalidasService) {}
+@Controller('stock-almacen')
+export class StockAlmacenController {
+  constructor(private readonly service: StockAlmacenService) {}
 
   @Post()
-  create(@Body() dto: CreateSalidaDto) {
+  create(@Body() dto: CreateStockDto) {
     return this.service.create(dto);
   }
 
   @Get()
   findAll(
-    @Query('q') q?: string,
+    @Query('id_material') id_material?: string,
     @Query('id_almacen') id_almacen?: string,
-    @Query('id_proyecto') id_proyecto?: string,
-    @Query('desde') desde?: string,
-    @Query('hasta') hasta?: string,
     @Query('activo') activo?: string,
+    @Query('dispMin') dispMin?: string,
+    @Query('dispMax') dispMax?: string,
+    @Query('resMin') resMin?: string,
+    @Query('resMax') resMax?: string,
     @Query('page') page: string = '1',
     @Query('limit') limit: string = '20',
   ) {
     return this.service.findAll({
-      q,
+      id_material: id_material ? Number(id_material) : undefined,
       id_almacen: id_almacen ? Number(id_almacen) : undefined,
-      id_proyecto: id_proyecto ? Number(id_proyecto) : undefined,
-      desde,
-      hasta,
       activo: typeof activo === 'string' ? activo === 'true' : undefined,
+      dispMin: dispMin ? Number(dispMin) : undefined,
+      dispMax: dispMax ? Number(dispMax) : undefined,
+      resMin: resMin ? Number(resMin) : undefined,
+      resMax: resMax ? Number(resMax) : undefined,
       page: Number(page),
       limit: Number(limit),
     });
@@ -41,24 +43,19 @@ export class SalidasController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateSalidaDto) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateStockDto) {
     return this.service.update(id, dto);
   }
 
-  // ⚠️ PONER ESTE ANTES del @Delete(':id')
   @Delete(':id/def')
   hardDelete(@Param('id', ParseIntPipe) id: number) {
     return this.service.hardDelete(id);
   }
- 
-  //Y el siguiente es una eliminación lógica🤏
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.service.remove(id);
   }
-
-  // Restaura una salida eliminada lógicamente (activo = true de nuevo)
 
   @Patch(':id/restore')
   restore(@Param('id', ParseIntPipe) id: number) {

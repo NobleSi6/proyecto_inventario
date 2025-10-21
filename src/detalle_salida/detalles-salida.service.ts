@@ -84,4 +84,13 @@ export class DetallesSalidaService {
     det.activo = true;
     return await this.repo.save(det);
   }
+
+
+async hardDelete(id_detalle_salida: number): Promise<void> {
+    const result = await this.repo.delete({ id_detalle_salida });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Detalle ${id_detalle_salida} no existe`);
+    }
+  }
+  
 }

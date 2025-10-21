@@ -84,4 +84,18 @@ export class SalidasService {
     salida.activo = true;
     return await this.repo.save(salida);
   }
+
+
+/**
+   * Elimina físicamente la salida (DELETE FROM salidas_inventario WHERE id_salida = :id).
+   * Lanza NotFound si no existe.
+   * OJO: puede fallar si hay FKs sin ON DELETE CASCADE (p.ej., detalle_salida).
+   */
+  async hardDelete(id_salida: number): Promise<void> {
+    const result = await this.repo.delete({ id_salida });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Salida ${id_salida} no existe`);
+    }
+  }
+
 }

@@ -1,33 +1,33 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
-import { DetallesSalidaService } from './detalles-salida.service';
-import { CreateDetalleSalidaDto } from './dto/create-detalle-salida.dto';
-import { UpdateDetalleSalidaDto } from './dto/update-detalle-salida.dto';
-import { CreateManyDetallesDto } from './dto/create-many-detalles.dto';
+import { DetallesTransferenciaService } from './detalles-transferencia.service';
+import { CreateDetalleTransferenciaDto } from './dto/create-detalle-transferencia.dto';
+import { UpdateDetalleTransferenciaDto } from './dto/update-detalle-transferencia.dto';
+import { CreateManyDetallesTransferenciaDto } from './dto/create-many-detalles-transferencia.dto';
 
-@Controller('detalles-salida')
-export class DetallesSalidaController {
-  constructor(private readonly service: DetallesSalidaService) {}
+@Controller('detalles-transferencia')
+export class DetallesTransferenciaController {
+  constructor(private readonly service: DetallesTransferenciaService) {}
 
   @Post()
-  create(@Body() dto: CreateDetalleSalidaDto) {
+  create(@Body() dto: CreateDetalleTransferenciaDto) {
     return this.service.create(dto);
   }
 
   @Post('bulk')
-  createMany(@Body() payload: CreateManyDetallesDto) {
+  createMany(@Body() payload: CreateManyDetallesTransferenciaDto) {
     return this.service.createMany(payload);
   }
 
   @Get()
   findAll(
-    @Query('id_salida') id_salida?: string,
+    @Query('id_transferencia') id_transferencia?: string,
     @Query('id_material') id_material?: string,
     @Query('activo') activo?: string,
     @Query('page') page: string = '1',
     @Query('limit') limit: string = '20',
   ) {
     return this.service.findAll({
-      id_salida: id_salida ? Number(id_salida) : undefined,
+      id_transferencia: id_transferencia ? Number(id_transferencia) : undefined,
       id_material: id_material ? Number(id_material) : undefined,
       activo: typeof activo === 'string' ? activo === 'true' : undefined,
       page: Number(page),
@@ -41,31 +41,22 @@ export class DetallesSalidaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateDetalleSalidaDto) {
+  update(@Param('id') id: string, @Body() dto: UpdateDetalleTransferenciaDto) {
     return this.service.update(Number(id), dto);
   }
 
-   // ⚠️ PONER ESTE ANTES del @Delete(':id')
   @Delete(':id/def')
   hardDelete(@Param('id') id: string) {
     return this.service.hardDelete(Number(id));
   }
-  
-  //Y el siguiente es una eliminación lógica🤏
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.service.remove(Number(id));
   }
 
-  // Restaura un detalle de salida eliminado lógicamente (activo = true de nuevo)
-
   @Patch(':id/restore')
   restore(@Param('id') id: string) {
     return this.service.restore(Number(id));
   }
-
-
-
-  
 }
