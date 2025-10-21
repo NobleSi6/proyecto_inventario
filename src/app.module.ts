@@ -2,9 +2,48 @@
 
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+//estan comentados para evitar errores si no existen los modulos
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { AuthModule } from './auth/auth.module';
-import { InventarioModule } from './inventario/inventario.module';
+//import { InventarioModule } from './inventario/inventario.module';
+//salidas y detalle salidas
+import { SalidasModule } from './salidas_inventario/salidas.module';
+import { DetallesSalidaModule } from './detalle_salida/detalles-salida.module';
+
+// import { Salida } from './salidas_inventario/salida.entity';
+// import { DetalleSalida } from './detalle_salida/detalle-salida.entity'
+// import { trace } from 'console';
+
+//transferencias y detalle transferencias
+
+import { TransferenciasModule } from './transferencias/transferencias.module';
+// import { Transferencia } from './transferencias/transferencia.entity';
+// import { DetalleTransferencia } from './detalle_transferencia/detalle-transferencia.entity';
+import { DetallesTransferenciaModule } from './detalle_transferencia/detalles-transferencia.module';
+
+//Materiales
+
+//import { Material } from './materiales/material.entity';
+import { MaterialesModule } from './materiales/materiales.module';
+
+//Almacenes
+
+//import { Almacen } from './almacenes/almacen.entity';
+import { AlmacenesModule } from './almacenes/almacenes.module';
+
+//stock_almacen
+
+//import { StockAlmacen } from './stock_almacen/stock-almacen.entity';
+import { StockAlmacenModule } from './stock_almacen/stock-almacen.module';
+
+//historial movimientos
+
+//import { HistorialMovimiento } from './historial_movimientos/historial-movimiento.entity';
+import { HistorialMovimientosModule } from './historial_movimientos/historial-movimientos.module';
+
+import { EmployeeModule } from './employee/employee.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -18,18 +57,27 @@ import { InventarioModule } from './inventario/inventario.module';
       database: 'testbackup', // El nombre de tu DB
       
       // Importante: lista todas tus entidades aquí
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      //entities: [Salida, DetalleSalida,Transferencia,DetalleTransferencia,Material,Almacen,StockAlmacen,HistorialMovimiento], // Agrega tus entidades aquí
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], //"descomentar luego de las pruebas"
       
-      synchronize: true, // ¡Solo usar en desarrollo! Esto crea las tablas automáticamente.
+      synchronize: false, // ¡Solo usar en desarrollo! Esto crea las tablas automáticamente.
       autoLoadEntities: true, // Carga automáticamente las entidades
     }),
     
+    SalidasModule,
+    DetallesSalidaModule,
+    TransferenciasModule,
+    DetallesTransferenciaModule,
+    MaterialesModule,
+    AlmacenesModule,
+    StockAlmacenModule,
+    HistorialMovimientosModule,
     UsuariosModule,
     AuthModule,
-    InventarioModule,
+    EmployeeModule,
+    ProjectsModule,
     // ... otros módulos
   ],
-  controllers: [],
   providers: [],
 })
 export class AppModule {}
