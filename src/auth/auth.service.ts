@@ -28,8 +28,9 @@ export class AuthService {
             nombre: registerDto.nombre,
             apellido: registerDto.apellido,
             email: registerDto.email,
+            telefono: registerDto.telefono,
             passwordHash: passwordHash,
-            rol: registerDto.rol,
+            idRol: registerDto.idRol,
             activo: true,
         });
 
@@ -41,7 +42,8 @@ export class AuthService {
             'id', 
             'nombre', 
             'apellido', 
-            'email', 
+            'email',
+            'telefono',
             'rol', 
             'activo', 
             'fechaCreacion'

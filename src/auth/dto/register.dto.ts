@@ -1,4 +1,4 @@
-import{IsNotEmpty,IsString, IsEmail, MinLength,MaxLength, IsIn} from 'class-validator';
+import{IsNotEmpty,IsString, IsEmail, MinLength,MaxLength, IsIn, IsOptional, IsInt} from 'class-validator';
 
 export class RegisterDto{
     @IsNotEmpty()
@@ -15,11 +15,17 @@ export class RegisterDto{
     email:string;
 
     @IsString()
+    @IsOptional()
+    @MaxLength(20)
+    telefono: string;
+
+
+    @IsString()
     @MinLength(8,{message:'La contraseña debe tener al menos 8 caracteres'})
     password:string;
 
-    @IsIn(['ADMINISTRADOR', 'SUPERVISOR', 'BODEGUERO', 'LECTOR'])
-    rol: string = 'BODEGUERO'; // Valor por defecto
-
-
+    @IsInt()
+    @IsOptional()
+    idRol: number = 3;
+    
 }

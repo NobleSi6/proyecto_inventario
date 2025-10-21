@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { AuthModule } from './auth/auth.module';
 import { InventarioModule } from './inventario/inventario.module';
+import { EmployeeModule } from './employee/employee.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -20,13 +22,15 @@ import { InventarioModule } from './inventario/inventario.module';
       // Importante: lista todas tus entidades aquí
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       
-      synchronize: true, // ¡Solo usar en desarrollo! Esto crea las tablas automáticamente.
+      synchronize: false, // ¡Solo usar en desarrollo! Esto crea las tablas automáticamente.
       autoLoadEntities: true, // Carga automáticamente las entidades
     }),
     
     UsuariosModule,
     AuthModule,
     InventarioModule,
+    EmployeeModule,
+    ProjectsModule,
     // ... otros módulos
   ],
   controllers: [],
