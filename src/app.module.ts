@@ -45,16 +45,32 @@ import { HistorialMovimientosModule } from './historial_movimientos/historial-mo
 import { EmployeeModule } from './employee/employee.module';
 import { ProjectsModule } from './projects/projects.module';
 
+//para el .env
+
+import { ConfigModule, ConfigService} from '@nestjs/config';
+
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Hace que ConfigModule esté disponible en toda la aplicación
+    }),
     // 1. Configuración de la conexión a la base de datos (Global)
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost', // O el nombre de tu contenedor Docker si lo usas
-      port: 5432,        // Puerto por defecto de PostgreSQL
-      username: 'postgres', // ⚠️ CÁMBIALO
-      password: '76507680', // ⚠️ CÁMBIALO
-      database: 'testbackup', // El nombre de tu DB
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+      // type: 'postgres',
+      // host: 'localhost', // O el nombre de tu contenedor Docker si lo usas
+      // port: 5432,        // Puerto por defecto de PostgreSQL
+      // username: 'postgres', // ⚠️ CÁMBIALO
+      // password: '76507680', // ⚠️ CÁMBIALO
+      // database: 'testbackup', // El nombre de tu DB
+
+      type: configService.get<string>('DB_TYPE') as 'postgres', // Usa 'postgres' como tipo forzado
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'), // Asegúrate de que el .env tenga un valor numérico o conviértelo
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
       
       // Importante: lista todas tus entidades aquí
       //entities: [Salida, DetalleSalida,Transferencia,DetalleTransferencia,Material,Almacen,StockAlmacen,HistorialMovimiento], // Agrega tus entidades aquí
@@ -63,7 +79,10 @@ import { ProjectsModule } from './projects/projects.module';
       synchronize: false, // ¡Solo usar en desarrollo! Esto crea las tablas automáticamente.
       autoLoadEntities: true, // Carga automáticamente las entidades
     }),
-    
+    inject: [ConfigService],
+    }),
+    // 2. Importa tus módulos aquí
+    //InventarioModule,
     SalidasModule,
     DetallesSalidaModule,
     TransferenciasModule,
