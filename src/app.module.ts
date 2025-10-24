@@ -44,6 +44,10 @@ import { HistorialMovimientosModule } from './historial_movimientos/historial-mo
 
 import { EmployeeModule } from './employee/employee.module';
 import { ProjectsModule } from './projects/projects.module';
+import { EntradasInventarioModule } from './entradas_inventario/entradas_inventario.module';
+import { DetalleEntradaModule } from './detalle_entrada/detalle_entrada.module';
+import { OrdenesCompraModule } from './ordenes_compra/ordenes_compra.module';
+import { DetalleOrdenCompraModule } from './detalle_orden_compra/detalle_orden_compra.module';
 
 @Module({
   imports: [
@@ -76,6 +80,10 @@ import { ProjectsModule } from './projects/projects.module';
     AuthModule,
     EmployeeModule,
     ProjectsModule,
+    EntradasInventarioModule,
+    DetalleEntradaModule,
+    OrdenesCompraModule,
+    DetalleOrdenCompraModule,
     // ... otros módulos
   ],
   providers: [],
