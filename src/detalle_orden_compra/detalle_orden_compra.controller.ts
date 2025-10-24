@@ -5,30 +5,30 @@ import { UpdateDetalleOrdenCompraDto } from './dto/update-detalle_orden_compra.d
 
 @Controller('detalle-orden-compra')
 export class DetalleOrdenCompraController {
-  constructor(private readonly detalleOrdenCompraService: DetalleOrdenCompraService) {}
+  constructor(private service: DetalleOrdenCompraService) {}
 
   @Post()
-  create(@Body() createDetalleOrdenCompraDto: CreateDetalleOrdenCompraDto) {
-    return this.detalleOrdenCompraService.create(createDetalleOrdenCompraDto);
+  create(@Body() dto: CreateDetalleOrdenCompraDto) {
+    return this.service.create(dto);
   }
 
   @Get()
   findAll() {
-    return this.detalleOrdenCompraService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.detalleOrdenCompraService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.service.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDetalleOrdenCompraDto: UpdateDetalleOrdenCompraDto) {
-    return this.detalleOrdenCompraService.update(+id, updateDetalleOrdenCompraDto);
+  update(@Param('id') id: number, @Body() dto: UpdateDetalleOrdenCompraDto) {
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.detalleOrdenCompraService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.service.remove(id);
   }
 }

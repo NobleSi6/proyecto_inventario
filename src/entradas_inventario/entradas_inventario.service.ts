@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEntradasInventarioDto } from './dto/create-entradas_inventario.dto';
-import { UpdateEntradasInventarioDto } from './dto/update-entradas_inventario.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { EntradaInventario } from './entities/entradas_inventario.entity';
+import { CreateEntradaInventarioDto } from './dto/create-entradas_inventario.dto';
+import { UpdateEntradaInventarioDto } from './dto/update-entradas_inventario.dto';
 
 @Injectable()
 export class EntradasInventarioService {
-  create(createEntradasInventarioDto: CreateEntradasInventarioDto) {
-    return 'This action adds a new entradasInventario';
+  constructor(
+    @InjectRepository(EntradaInventario)
+    private repo: Repository<EntradaInventario>,
+  ) {}
+
+  create(dto: CreateEntradaInventarioDto) {
+    const data = this.repo.create(dto);
+    return this.repo.save(data);
   }
 
   findAll() {
-    return `This action returns all entradasInventario`;
+    return this.repo.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} entradasInventario`;
+    return this.repo.findOne({ where: { id_entrada: id } });
   }
 
-  update(id: number, updateEntradasInventarioDto: UpdateEntradasInventarioDto) {
-    return `This action updates a #${id} entradasInventario`;
+  update(id: number, dto: UpdateEntradaInventarioDto) {
+    return this.repo.update(id, dto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} entradasInventario`;
+    return this.repo.delete(id);
   }
 }

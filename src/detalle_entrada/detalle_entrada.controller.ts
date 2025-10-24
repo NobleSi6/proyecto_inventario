@@ -5,30 +5,30 @@ import { UpdateDetalleEntradaDto } from './dto/update-detalle_entrada.dto';
 
 @Controller('detalle-entrada')
 export class DetalleEntradaController {
-  constructor(private readonly detalleEntradaService: DetalleEntradaService) {}
+  constructor(private service: DetalleEntradaService) {}
 
   @Post()
-  create(@Body() createDetalleEntradaDto: CreateDetalleEntradaDto) {
-    return this.detalleEntradaService.create(createDetalleEntradaDto);
+  create(@Body() dto: CreateDetalleEntradaDto) {
+    return this.service.create(dto);
   }
 
   @Get()
   findAll() {
-    return this.detalleEntradaService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.detalleEntradaService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.service.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDetalleEntradaDto: UpdateDetalleEntradaDto) {
-    return this.detalleEntradaService.update(+id, updateDetalleEntradaDto);
+  update(@Param('id') id: number, @Body() dto: UpdateDetalleEntradaDto) {
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.detalleEntradaService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.service.remove(id);
   }
 }

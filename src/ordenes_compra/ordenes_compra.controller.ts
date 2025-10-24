@@ -1,72 +1,35 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { OrdenesCompraService } from './ordenes_compra.service';
-import { CreateOrdenesCompraDto } from './dto/create-ordenes_compra.dto';
-import { UpdateOrdenesCompraDto } from './dto/update-ordenes_compra.dto';
-import { DetalleOrdenCompraService } from 'src/detalle_orden_compra/detalle_orden_compra.service';
-import { CreateDetalleOrdenCompraDto } from 'src/detalle_orden_compra/dto/create-detalle_orden_compra.dto';
-import { UpdateDetalleOrdenCompraDto } from 'src/detalle_orden_compra/dto/update-detalle_orden_compra.dto';
+import { CreateOrdenCompraDto } from 'src/detalle_orden_compra/dto/create-detalle_orden_compra.dto';
 
-@Controller('ordeneses-compra')
+
+
+@Controller('ordenes-compra')
 export class OrdenesCompraController {
-  constructor(
-    private readonly ordenesesCompraService: OrdenesCompraService,
-    private readonly detalleOrdenesCompraService: DetalleOrdenCompraService,
-  ) {}
+  constructor(private service: OrdenesCompraService) {}
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
-  create(@Body() createOrdenesCompraDto: CreateOrdenesCompraDto) {
-    return this.ordenesesCompraService.create(createOrdenesCompraDto);
+  create(@Body() dto: CreateOrdenCompraDto) {
+    return this.service.create(dto);
   }
 
   @Get()
   findAll() {
-    return this.ordenesesCompraService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordenesesCompraService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.service.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrdenesCompraDto: UpdateOrdenesCompraDto) {
-    return this.ordenesesCompraService.update(+id, updateOrdenesCompraDto);
+  update(@Param('id') id: number, @Body() dto: CreateOrdenCompraDto) {
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
-    return this.ordenesesCompraService.remove(+id);
-  }
-
-
-  // Endpoints para detalles
-  @Post(':id/detalles')
-  @HttpCode(HttpStatus.CREATED)
-  createDetalle(
-    @Param('id') id: string,
-    @Body() createDetalleDto: CreateDetalleOrdenCompraDto,
-  ) {
-    return this.detalleOrdenesCompraService.create(+id, createDetalleDto);
-  }
-
-  @Get(':id/detalles')
-  findDetalles(@Param('id') id: string) {
-    return this.detalleOrdenesCompraService.findByOrdenes(+id);
-  }
-
-  @Patch('detalles/:detalleId')
-  updateDetalle(
-    @Param('detalleId') detalleId: string,
-    @Body() updateDetalleDto: UpdateDetalleOrdenCompraDto,
-  ) {
-    return this.detalleOrdenesCompraService.update(+detalleId, updateDetalleDto);
-  }
-
-  @Delete('detalles/:detalleId')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  removeDetalle(@Param('detalleId') detalleId: string) {
-    return this.detalleOrdenesCompraService.remove(+detalleId);
+  remove(@Param('id') id: number) {
+    return this.service.remove(id);
   }
 }

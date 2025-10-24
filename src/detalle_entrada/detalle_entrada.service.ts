@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDetalleEntradaDto } from './dto/create-detalle_entrada.dto';
 import { UpdateDetalleEntradaDto } from './dto/update-detalle_entrada.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DetalleEntrada } from './entities/detalle_entrada.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class DetalleEntradaService {
-  create(createDetalleEntradaDto: CreateDetalleEntradaDto) {
-    return 'This action adds a new detalleEntrada';
+  constructor(@InjectRepository(DetalleEntrada) private repo: Repository<DetalleEntrada>) {}
+
+  create(dto: CreateDetalleEntradaDto) {
+    return this.repo.save(this.repo.create(dto));
   }
 
   findAll() {
-    return `This action returns all detalleEntrada`;
+    return this.repo.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} detalleEntrada`;
+    return this.repo.findOne({ where: { id_detalle_entrada: id } });
   }
 
-  update(id: number, updateDetalleEntradaDto: UpdateDetalleEntradaDto) {
-    return `This action updates a #${id} detalleEntrada`;
+  update(id: number, dto: UpdateDetalleEntradaDto) {
+    return this.repo.update(id, dto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} detalleEntrada`;
+    return this.repo.delete(id);
   }
 }
