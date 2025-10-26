@@ -29,7 +29,7 @@ export class Employee { // Cambié el nombre de la clase de Employee a Empleado 
   // ----------------------------------------------------
   
   // Clave Primaria - id_empleado (serial, PK)
-  @PrimaryGeneratedColumn({ name: 'id_empleados' })
+  @PrimaryGeneratedColumn({ name: 'id_empleado' })
   idEmpleado: number;
 
   // Código del empleado (varchar(50), NOT NULL)
@@ -83,16 +83,17 @@ export class Employee { // Cambié el nombre de la clase de Employee a Empleado 
   
   //Relación Muchos a Uno con la tabla 'rol' (id_rol, FK)
   @ManyToOne(() => Rol)
-  @JoinColumn({ name: 'id_rol' })
+  @JoinColumn({ name: 'cargo' })
   rol: Rol;
 
   /* * Opción 2 (Simple): Solo definir la columna del ID de la relación.
    * Esto evita tener que importar las clases de entidad si solo necesitas el ID.
    */
-  @Column({ name: 'usuario_id', type: 'int', nullable: false })
+  
+  @Column({ name: 'id_usuario', type: 'int', nullable: false })
   idUsuario: number;
 
-  @Column({ name: 'rol_id', type: 'int', nullable: false })
+  @Column({ name: 'cargo', type: 'int', nullable: false })
   idRol: number;
 
   // ----------------------------------------------------

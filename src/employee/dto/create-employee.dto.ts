@@ -57,14 +57,14 @@ export class CreateEmployeeDto {
   activo?: boolean;
 
   // Mapeo: id_usuario (JSON) -> idUsuario (Propiedad DTO)
-  @Expose({ name: 'usuario_id' })
+  @Expose({ name: 'id_usuario' })
   @IsInt()
   @IsNotEmpty()
   @Type(() => Number)
   idUsuario: number;
 
   // Mapeo: id_rol (JSON) -> idRol (Propiedad DTO)
-  @Expose({ name: 'rol_id' })
+  @Expose({ name: 'cargo' })
   @IsInt()
   @IsNotEmpty()
   @Type(() => Number)
