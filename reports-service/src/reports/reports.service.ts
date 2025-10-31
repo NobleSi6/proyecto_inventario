@@ -32,6 +32,7 @@ export class ReportsService {
             .addSelect('material.nombre', 'materialName')
             .addSelect('SUM(detalle.cantidad)', 'totalUsed')
             
+            
             // 3. Aplicar filtros
             .where('detalle.activo = true'); // Asumiendo que solo materiales activos son relevantes
 
@@ -50,7 +51,8 @@ export class ReportsService {
         // 4. Agrupar y Ordenar
         query
             .groupBy('material.id_material, material.nombre')
-            .orderBy('totalUsed', 'DESC')
+            //.orderBy('totalUsed', 'DESC')
+            .orderBy('"totalUsed"', 'DESC')
             .limit(limit);
 
         return query.getRawMany();
