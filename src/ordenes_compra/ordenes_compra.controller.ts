@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { OrdenesCompraService } from './ordenes_compra.service';
-import { CreateOrdenCompraDto } from 'src/detalle_orden_compra/dto/create-detalle_orden_compra.dto';
+import { CreateOrdenCompraDto } from './dto/create-ordenes_compra.dto';
 
 
 

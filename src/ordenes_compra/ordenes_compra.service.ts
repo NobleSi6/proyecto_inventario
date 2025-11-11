@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateOrdenCompraDto } from 'src/detalle_orden_compra/dto/create-detalle_orden_compra.dto';
+import { CreateOrdenCompraDto } from './dto/create-ordenes_compra.dto';
 import { Repository } from 'typeorm';
 import { OrdenCompra } from './entities/ordenes_compra.entity';
 
