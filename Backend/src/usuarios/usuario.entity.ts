@@ -3,7 +3,7 @@ import { Rol } from '../roles/rol.entity';
 
 @Entity('usuarios')
 export class Usuario{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({name: "id_usuario"})
     id:number;
     @Column({length:100})
     nombre:string;
