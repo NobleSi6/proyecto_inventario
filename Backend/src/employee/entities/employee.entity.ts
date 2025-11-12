@@ -61,7 +61,7 @@ export class Employee { // Cambié el nombre de la clase de Employee a Empleado 
   email: string;
 
   // Fecha de Contratación (date, NOT NULL)
-  @Column({ name: 'fecha_contratacion', type: 'date', nullable: false })
+  @Column({ name: 'fecha_contratacion', type: 'date', nullable: true })
   fechaContratacion: Date;
   
   // Activo (boolean, NOT NULL)
@@ -78,7 +78,7 @@ export class Employee { // Cambié el nombre de la clase de Employee a Empleado 
   
   // Relación Muchos a Uno con la tabla 'usuarios' (id_usuario, FK)
   @ManyToOne(() => Usuario)
-  @JoinColumn({ name: 'id_usuario' })
+  @JoinColumn({ name: 'id_usuario'})
   usuario: Usuario;
   
   //Relación Muchos a Uno con la tabla 'rol' (id_rol, FK)
@@ -89,10 +89,10 @@ export class Employee { // Cambié el nombre de la clase de Employee a Empleado 
   /* * Opción 2 (Simple): Solo definir la columna del ID de la relación.
    * Esto evita tener que importar las clases de entidad si solo necesitas el ID.
    */
-  @Column({ name: 'usuario_id', type: 'int', nullable: false })
+  @Column({ name: 'usuario_id', type: 'int', nullable: true })
   idUsuario: number;
 
-  @Column({ name: 'rol_id', type: 'int', nullable: false })
+  @Column({ name: 'rol_id', type: 'int', nullable: true })
   idRol: number;
 
   // ----------------------------------------------------

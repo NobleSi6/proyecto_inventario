@@ -50,7 +50,7 @@ export class ReportsService {
         // 4. Agrupar y Ordenar
         query
             .groupBy('material.id_material, material.nombre')
-            .orderBy('totalUsed', 'DESC')
+            .orderBy('"totalUsed"', 'DESC')
             .limit(limit);
 
         return query.getRawMany();

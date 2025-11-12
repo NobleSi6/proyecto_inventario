@@ -26,7 +26,7 @@ export class Usuario{
   @JoinColumn({ name: 'id_rol' })
   rol: Rol; // Objeto de Rol
 
-  @Column({ name: 'id_rol' })
+  @Column({ name: 'id_rol' , nullable: true})
   idRol: number; // 👈 ID de la FK
 
 }

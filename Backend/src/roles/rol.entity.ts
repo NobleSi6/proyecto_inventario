@@ -9,7 +9,7 @@ export class Rol {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50, unique: true })
+  @Column({ length: 50, unique: true, nullable: true })
   cargo: string;
 
   // Relación: Un rol tiene muchos usuarios (Asumimos que Usuario.rol existe)
