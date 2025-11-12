@@ -39,13 +39,13 @@ export class Usuario{
     // CLAVES FORÁNEAS (FK)
     // ---------------------------------------------------------------------
 
-    // 5. RELACIÓN ROL: Columna 'cargo' en la DB, no 'id_rol'
-    @ManyToOne(() => Rol, rol => rol.usuarios)
-    @JoinColumn({ name: 'cargo' }) // DB: cargo
-    rol: Rol; // Objeto de Rol
+  @Column({ name: 'id_rol' , nullable: true})
+  idRol: number; // 👈 ID de la FK
 
-    @Column({ name: 'cargo', nullable: false }) // DB: cargo int NOT NULL
-    idRol: number; // ID de la FK
+  // COMENTADO POR QUE ESTE NO ES EL QUE HIZO ELIAS, ESTE ES OTRO
+    // @Column({ name: 'cargo', nullable: false }) // DB: cargo int NOT NULL
+    // idRol: number; // ID de la FK
+
     
     // 6. RELACIÓN EMPLEADO: Faltaba esta FK, es requerida por la DB
     @OneToOne(() => Employee) // Generalmente es OneToOne o ManyToOne dependiendo de la lógica
