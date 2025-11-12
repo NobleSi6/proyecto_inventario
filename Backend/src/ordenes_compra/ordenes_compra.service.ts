@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOrdenCompraDto } from './dto/create-ordenes_compra.dto';
+import { UpdateOrdenesCompraDto } from './dto/update-ordenes_compra.dto';
 import { Repository } from 'typeorm';
 import { OrdenCompra } from './entities/ordenes_compra.entity';
 
@@ -20,7 +21,7 @@ export class OrdenesCompraService {
     return this.repo.findOne({ where: { id_orden_compra: id } });
   }
 
-  update(id: number, dto: CreateOrdenCompraDto) {
+  update(id: number, dto: UpdateOrdenesCompraDto) {
     return this.repo.update(id, dto);
   }
 

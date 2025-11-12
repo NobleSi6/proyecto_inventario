@@ -1,32 +1,57 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
+import { 
+    Entity, 
+    PrimaryGeneratedColumn, 
+    Column, 
+    ManyToOne, 
+    JoinColumn, 
+    OneToOne 
+} from "typeorm";
 import { Rol } from '../roles/rol.entity';
+// Importa Empleado (Employee) para la relación de clave foránea
+import { Employee } from '../employee/entities/employee.entity'; 
 
 @Entity('usuarios')
 export class Usuario{
-    @PrimaryGeneratedColumn({name: "id_usuario"})
-    id:number;
-    @Column({length:100})
-    nombre:string;
-    @Column({length:100,nullable:true})
-    apellido:string;
-    @Column({length:255, unique:true})
-    email:string;
-    @Column({ length: 20, nullable: true })
-    telefono: string; 
-    @Column({name:'password_hash',length:255})
-    passwordHash:string;
+    
+    // 1. CLAVE PRIMARIA (id_usuario): Resuelve el error 'Usuario.id'
+    @PrimaryGeneratedColumn({name: "id_usuario"}) // DB: id_usuario serial NOT NULL
+    id: number; 
+    
+    // 2. CAMPO PRINCIPAL (username): El esquema no tiene nombre/apellido/email
+    @Column({name: 'username', length: 30, nullable: false}) // DB: username varchar(30) NOT NULL
+    username: string; 
 
-    @Column({default:true})
-    activo:boolean;
-    @Column({name:'fecha_creacion', type: 'timestamp', default: ()=>'CURRENT_TIMESTAMP'})
+    // 3. PASSWORD (password): La columna se llama 'password', no 'password_hash'
+    @Column({name: 'password', length: 200, nullable: false}) // DB: password varchar(200) NOT NULL
+    password: string;
+
+    // Los campos 'nombre', 'apellido', 'email', 'telefono' han sido removidos 
+    // porque no existen en la tabla 'usuarios'.
+
+    @Column({nullable: false}) // DB: activo boolean NOT NULL
+    activo: boolean;
+    
+    // 4. FECHA DE CREACIÓN: El tipo en la DB es 'date', no 'timestamp'
+    @Column({name:'fecha_creacion', type: 'date', nullable: false, default: ()=>'CURRENT_DATE'}) // DB: fecha_creacion date NOT NULL
     fechaCreacion: Date;
     
-  // ⬇️ RELACIÓN DE ROL (Clave Foránea)
-  @ManyToOne(() => Rol, rol => rol.usuarios)
-  @JoinColumn({ name: 'id_rol' })
-  rol: Rol; // Objeto de Rol
+    // ---------------------------------------------------------------------
+    // CLAVES FORÁNEAS (FK)
+    // ---------------------------------------------------------------------
 
-  @Column({ name: 'id_rol' })
-  idRol: number; // 👈 ID de la FK
+    // 5. RELACIÓN ROL: Columna 'cargo' en la DB, no 'id_rol'
+    @ManyToOne(() => Rol, rol => rol.usuarios)
+    @JoinColumn({ name: 'cargo' }) // DB: cargo
+    rol: Rol; // Objeto de Rol
 
+    @Column({ name: 'cargo', nullable: false }) // DB: cargo int NOT NULL
+    idRol: number; // ID de la FK
+    
+    // 6. RELACIÓN EMPLEADO: Faltaba esta FK, es requerida por la DB
+    @OneToOne(() => Employee) // Generalmente es OneToOne o ManyToOne dependiendo de la lógica
+    @JoinColumn({ name: 'id_empleado' }) // DB: id_empleado
+    empleado: Employee;
+
+    @Column({ name: 'id_empleado', nullable: false }) // DB: id_empleado int NOT NULL
+    idEmpleado: number;
 }

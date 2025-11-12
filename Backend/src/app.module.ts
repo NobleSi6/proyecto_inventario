@@ -48,7 +48,7 @@ import { EntradasInventarioModule } from './entradas_inventario/entradas_inventa
 import { DetalleEntradaModule } from './detalle_entrada/detalle_entrada.module';
 import { OrdenesCompraModule } from './ordenes_compra/ordenes_compra.module';
 import { DetalleOrdenCompraModule } from './detalle_orden_compra/detalle_orden_compra.module';
-
+import { RolesModule } from './roles/roles.module';
 //para el .env
 
 import { ConfigModule, ConfigService} from '@nestjs/config';
@@ -103,6 +103,7 @@ import { ConfigModule, ConfigService} from '@nestjs/config';
     DetalleEntradaModule,
     OrdenesCompraModule,
     DetalleOrdenCompraModule,
+    RolesModule,
     // ... otros módulos
   ],
   providers: [],

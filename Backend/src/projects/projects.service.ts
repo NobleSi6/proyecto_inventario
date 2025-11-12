@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Project } from './Project.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
-
+import { UpdateProjectDto } from './dto/update-project.dto';  
 // Define un DTO para la creación (mejor práctica)
 // import { CreateProjectDto } from './dto/create-project.dto'; 
 
@@ -35,7 +35,7 @@ findOne(id: number): Promise<Project | null> {
 }
 
   // Actualizar un proyecto
-  async update(id: number, updateData: any): Promise<Project|null> {
+  async update(id: number, updateData: UpdateProjectDto): Promise<Project|null> {
     await this.projectsRepository.update(id, updateData);
     return this.findOne(id); // Opcional: devuelve el proyecto actualizado
   }
