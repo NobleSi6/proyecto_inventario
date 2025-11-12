@@ -19,7 +19,7 @@ export class RolesService {
     const newRol = this.rolesRepository.create(createRolDto);
     return this.rolesRepository.save(newRol);
   }
-
+// Hola esto es para hacer un pull request
   // R - READ (Leer todos)
   findAll(): Promise<Rol[]> {
     return this.rolesRepository.find();
