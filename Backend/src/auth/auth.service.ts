@@ -105,7 +105,7 @@ async login(loginDto: LoginDto) {
     const payload = { 
       username: userWithRelations.username, // ✅ Usamos username
       sub: userWithRelations.id, 
-      rol: userWithRelations.rol 
+      rol: userWithRelations.idRol 
     };
     
     return {
@@ -114,7 +114,7 @@ async login(loginDto: LoginDto) {
       usuario: {
         id: userWithRelations.id,
         username: userWithRelations.username, // ✅ Usamos username
-        rol: userWithRelations.rol,
+        rol: userWithRelations.idRol,
         idEmpleado: userWithRelations.idEmpleado, // ✅ Agregamos el idEmpleado
       }
     };
