@@ -48,6 +48,10 @@ import { EntradasInventarioModule } from './entradas_inventario/entradas_inventa
 import { DetalleEntradaModule } from './detalle_entrada/detalle_entrada.module';
 import { OrdenesCompraModule } from './ordenes_compra/ordenes_compra.module';
 import { DetalleOrdenCompraModule } from './detalle_orden_compra/detalle_orden_compra.module';
+import { CategoriaModule } from './categoria/categoria.module';
+import { EstadosModule } from './estados/estados.module';
+import { ProveedoresModule } from './proveedores/proveedores.module';
+import { UnidadesMedidaModule } from './unidades_medida/unidades_medida.module';
 
 //para el .env
 
@@ -103,6 +107,10 @@ import { ConfigModule, ConfigService} from '@nestjs/config';
     DetalleEntradaModule,
     OrdenesCompraModule,
     DetalleOrdenCompraModule,
+    CategoriaModule,
+    EstadosModule,
+    ProveedoresModule,
+    UnidadesMedidaModule,
     // ... otros módulos
   ],
   providers: [],
