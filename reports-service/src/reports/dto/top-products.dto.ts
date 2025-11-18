@@ -1,4 +1,7 @@
+// src/reports/dto/top-products.dto.ts
 import { IsOptional, IsDateString, IsNumber } from 'class-validator';
+// 🚨 Importar Type de class-transformer
+import { Type } from 'class-transformer'; 
 
 export class TopProductsDto {
   @IsOptional()
@@ -10,10 +13,14 @@ export class TopProductsDto {
   endDate?: string;
 
   @IsOptional()
+  // 🚨 CORRECCIÓN 1: Convertir la entrada a Number antes de validar
+  @Type(() => Number)
   @IsNumber()
   projectId?: number;
 
   @IsOptional()
+  // 🚨 CORRECCIÓN 2: Convertir la entrada a Number antes de validar
+  @Type(() => Number)
   @IsNumber()
-  limit?: number = 5; // Por defecto, top 5 productos
+  limit?: number = 5; 
 }

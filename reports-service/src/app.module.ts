@@ -1,32 +1,21 @@
+// src/app.module.ts
+
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ReportsModule } from './reports/reports.module';
+import { ConfigModule } from '@nestjs/config'; 
+// 💡 Importar el módulo del core que acabas de crear
+import { ReportsModule  } from './reports/reports.module'; 
+
 @Module({
   imports: [
+    // Usamos esto para leer variables de entorno como PORT y BACKEND_CRUD_URL
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: true, 
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        type: configService.get<string>('DB_TYPE') as 'postgres', // Usa 'postgres' como tipo forzado
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'), // Asegúrate de que el .env tenga un valor numérico o conviértelo
-        username: configService.get<string>('DB_USERNAME'),
-        password: configService.get<string>('DB_PASSWORD'),
-        database: configService.get<string>('DB_DATABASE'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: false, // Solo para desarrollo; en producción, usa migraciones
-        autoLoadEntities: true,
-      }),
-      inject: [ConfigService],
-      
-    }),
-    ReportsModule
-      ],
+    // ✅ Agrega tu módulo aquí para que NestJS cargue el controlador
+    ReportsModule, 
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
