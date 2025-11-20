@@ -10,6 +10,13 @@ import { UpdateProyectoDto } from './dto/update-proyecto.dto';
 export class ProyectosController {
   constructor(private readonly proyectosService: ProyectosService) {}
 
+  // Endpoint de prueba para verificar conexión
+  @Get('test-connection')
+  @ApiOperation({ summary: 'Probar conexión a base de datos' })
+  testConnection() {
+    return this.proyectosService.testConnection();
+  }
+
   @Post()
   @ApiOperation({ summary: 'Crear un nuevo proyecto' })
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Proyecto creado exitosamente' })
@@ -23,7 +30,8 @@ export class ProyectosController {
   @ApiQuery({ name: 'activo', required: false, type: Boolean, description: 'Filtrar por estado activo' })
   @ApiResponse({ status: HttpStatus.OK, description: 'Lista de proyectos' })
   findAll(@Query('activo') activo?: string) {
-    return this.proyectosService.findAll(activo === 'true');
+    const activoBool = activo === 'true' ? true : activo === 'false' ? false : undefined;
+    return this.proyectosService.findAll(activoBool);
   }
 
   @Get(':id')
