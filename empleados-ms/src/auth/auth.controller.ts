@@ -1,0 +1,23 @@
+import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import { AuthService } from './auth.service';
+
+interface LoginDto {
+  username: string;
+  password: string;
+}
+
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('login')
+  async login(@Body() body: LoginDto) {
+    const user = await this.authService.validateUser(body.username, body.password);
+
+    if (!user) {
+      throw new UnauthorizedException('Credenciales incorrectas');
+    }
+
+    return this.authService.login(user); // ✅ ya no hay error
+  }
+}
