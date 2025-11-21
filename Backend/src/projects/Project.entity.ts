@@ -1,56 +1,61 @@
 // src/projects/project.entity.ts
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Employee } from 'src/employee/entities/employee.entity';  // ← ajusta la ruta si es necesario
+import { Estado } from '../estados/estado.entity';         // ← ajusta la ruta si es necesario
 
-@Entity('proyectos') // Asegúrate de usar el nombre exacto de la tabla: 'proyectos'
+@Entity('proyectos')
 export class Project {
 
-  // 1. Clave Primaria (id_proyecto)
   @PrimaryGeneratedColumn({ name: 'id_proyecto' })
-  id: number; // Mapeado a id_proyecto
+  id: number;
 
-  // 2. Campos NO NULOS
   @Column({ length: 50 })
-  codigo: string; // varchar(50)
+  codigo: string;
 
   @Column({ length: 200 })
-  nombre: string; // varchar(200)
-
-  // 3. Campos NULABLES (Nullable: true)
-  @Column({ type: 'text', nullable: true })
-  descripcion: string; // text
+  nombre: string;
 
   @Column({ type: 'text', nullable: true })
-  direccion: string; // text
+  descripcion?: string;
+
+  @Column({ type: 'text', nullable: true })
+  direccion?: string;
 
   @Column({ length: 100, nullable: true })
-  ciudad: string; // varchar(100)
+  ciudad?: string;
 
   @Column({ type: 'date', nullable: true })
-  fecha_inicio: Date; // date
+  fecha_inicio?: Date;
 
   @Column({ type: 'date', nullable: true })
-  fecha_fin_estimada: Date; // date
+  fecha_fin_estimada?: Date;
 
   @Column({ type: 'date', nullable: true })
-  fecha_fin_real: Date; // date
+  fecha_fin_real?: Date;
 
   @Column({ type: 'numeric', precision: 15, scale: 2, nullable: true })
-  presupuesto: number; // numeric(15, 2)
+  presupuesto?: number;
 
-  @Column({ type: 'boolean', nullable: true, default: true })
-  activo: boolean; // boolean (usamos default: true por convención, aunque en la DB es N)
+  @Column({ type: 'boolean', default: true })
+  activo?: boolean;
 
-  // 4. Claves Foráneas (FK)
-  // Usamos 'int' y 'nullable: true' para coincidir con la definición de la tabla.
-  // Podrías usar @ManyToOne si ya tuvieras la entidad de 'Responsable' y 'Estado'.
-  @Column({ type: 'int', nullable: true })
-  id_empleado: number; // int (FK)
+  // CORREGIDO: la columna REAL se llama "responsable"
+  @Column({ name: 'responsable' })
+  responsable: number;   // ← este es el ID del empleado
 
-  @Column({ type: 'int', nullable: true })
-  id_estado: number; // int (FK)
+  // Si quieres cargar el objeto Empleado completo (recomendado)
+  @ManyToOne(() => Employee, { nullable: false })
+  @JoinColumn({ name: 'responsable' })   // ← importantísimo
+  empleadoResponsable?: Employee;
 
-  // 5. Fecha de Creación (TIMESTAMP)
-  // Usamos @CreateDateColumn para manejar el valor DEFAULT CURRENT_TIMESTAMP de PostgreSQL.
+  // Lo mismo para el estado
+  @Column({ name: 'estado' })
+  estado: number;
+
+  @ManyToOne(() => Estado)
+  @JoinColumn({ name: 'estado' })
+  estadoProyecto?: Estado;
+
   @CreateDateColumn({ type: 'timestamp', name: 'fecha_creacion' })
   fecha_creacion: Date;
 }

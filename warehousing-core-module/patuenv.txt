@@ -1,0 +1,10 @@
+# .env (para tu microservicio Core)
+
+# Si corres ambos en tu máquina local:
+BACKEND_CRUD_URL=http://localhost:3000 
+
+# Si corres ambos en Docker Compose:
+# BACKEND_CRUD_URL=http://backend-crud:3000
+
+# Puerto de tu microservicio Core
+PORT=3002
